@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS dwh.fac_total(msr_total INT);

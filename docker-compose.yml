@@ -1,0 +1,44 @@
+version: '3.8'
+
+# Run as
+# docker-compose build; docker-compose up -d
+# Check with
+# docker ps
+# Then check the logs with
+# docker logs --tail 50 $container_id
+# docker-compose images
+# docker-compose logs --tail 20 repo_name
+
+services:
+
+  db:
+    container_name: postgres_dwhCovid
+    image: postgres:latest
+    environment:   # Set up postgres database name and password
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: DWH_COVID
+      POSTGRES_USER: sa_etl
+    ports:    # Set up ports exposed for other containers to connect to
+      - 5432:5432
+    networks:
+      - app-tier
+    volumes:
+      - ./postgres:/docker-entrypoint-initdb.d
+
+  # python_app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     - postgres_db
+  #   networks:
+  #     - app-tier
+  #   command:
+  #     tail -f /dev/null
+
+volumes:
+  pg_data:
+
+networks:
+  app-tier:
+    driver: bridge
