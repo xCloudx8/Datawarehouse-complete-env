@@ -11,12 +11,16 @@ res = conn.execute("SELECT 'Connected'")
 #Initialize DWH
 checkTable.initialize(conn)
 
+#CheckLastUpdateDate
+
+
 #GetUpdatedData
-region = getData.getRegioni_dataset()
-province = getData.getProvince_dataset()
+time = '20200224'
+region = getData.getRegioni_dataset(time)
+province = getData.getProvince_dataset(time)
 
 #Populate dimension tables
-populate.populateDimensions(conn, region)
+populate.mainPopulate(conn, region)
 
 #Populate fact tables
 

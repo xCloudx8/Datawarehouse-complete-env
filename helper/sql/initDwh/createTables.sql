@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS dwh.dim_province( pk_updateDate DATE,
                                              pk_idProvincia SMALLINT,
                                              nationName VARCHAR(3),
                                              idRegione SMALLINT,
-                                             provinciaName VARCHAR,
                                              provinciaShortName VARCHAR,
                                              PRIMARY KEY(pk_updateDate, pk_idProvincia)
                                             );
