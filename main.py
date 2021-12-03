@@ -20,14 +20,13 @@ if time is None:
     time = datetime.strptime('20200224', '%Y%m%d') #Start date for collecting data
 else:
     time = datetime.strptime(str(time), '%Y-%m-%d %H:%M:%S')
-    time = time.strftime('%Y%m%d')
+time = time.strftime('%Y%m%d')
 
 today = datetime.strptime(datetime.today().strftime('%Y%m%d'), '%Y%m%d')
 today -= timedelta(days=1)
 today = today.strftime('%Y%m%d')
 
 while time != today:
-    print(time, today)
     #GetUpdatedData
     region = getData.getRegioni_dataset(time)
     province = getData.getProvince_dataset(time)
@@ -35,12 +34,13 @@ while time != today:
     #Populate dimension tables
     populate.mainPopulate(conn, region, province)
 
-    #Populate fact tables
-
-
-    #Build datamarts
-
+    time = datetime.strptime(time, '%Y%m%d')
     time+=timedelta(days=1)
+    time = time.strftime('%Y%m%d')
+
+#Populate fact tables
+
+#Build datamarts
 
 #Close connection
 conn.close()
