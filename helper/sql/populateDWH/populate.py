@@ -1,19 +1,12 @@
-from numpy import void0
-import multiprocessing as mp
-
-#Prepare multiprocessing
-pool = mp.Pool(mp.cpu_count())
-
-def mainPopulate(conn, dataset):
-    pool.map(populateProvinceDimension(conn,dataset),populateRegionDimension(conn,dataset) )
-    return void0
+from multiprocessing import Process
 
 #Populate dimensions
 def populateRegionDimension(conn, dataset):
+    conn.execute('''TRUNCATE TABLE dwh.dim_regioni;''')
     for row in dataset.itertuples():
         conn.execute('''
                     INSERT INTO dwh.dim_regioni (pk_updateDate, pk_idRegione, nationName, regioneName)
-                    VALUES (?,?,?,?)
+                    VALUES (%s,%s,%s,%s)
                     ''',
                     row.data, 
                     row.codice_regione,
@@ -21,20 +14,27 @@ def populateRegionDimension(conn, dataset):
                     row.denominazione_regione
                     )
 
-    return void0
-
 def populateProvinceDimension(conn, dataset):
+    conn.execute('''TRUNCATE TABLE dwh.dim_province;''')
     for row in dataset.itertuples():
         conn.execute('''
                     INSERT INTO dwh.dim_province (pk_updateDate, pk_idProvincia, nationName, idRegione, provinciaShortName)
-                    VALUES (?,?,?,?)
+                    VALUES (%s,%s,%s,%s,%s)
                     ''',
                     row.data, 
                     row.codice_provincia,
                     row.stato,
-                    row.codiceRegione,
+                    row.codice_regione,
                     row.sigla_provincia
-                    )
-    return void0
+                    ) 
+                    
+#Executing in parallel
+def multiprocess(*function):
+    for process in function:
+        p = Process(target= process)
+        p.start()
 
-print
+def mainPopulate(conn, region, province):
+    multiprocess(populateProvinceDimension(conn, province), 
+                 populateRegionDimension(conn, region)
+                )
