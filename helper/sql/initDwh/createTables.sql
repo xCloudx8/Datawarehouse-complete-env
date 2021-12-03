@@ -1,3 +1,4 @@
-CREATE TABLE IF NOT EXISTS dwh.dim_province( pk_updateDate TIMESTAMP,pk_idProvincia SMALLINT,nationName VARCHAR(3),idRegione SMALLINT,provinciaShortName VARCHAR,PRIMARY KEY(pk_updateDate, pk_idProvincia));
-CREATE TABLE IF NOT EXISTS dwh.dim_regioni( pk_updateDate TIMESTAMP,pk_idRegione SMALLINT,nationName VARCHAR(3),regioneName VARCHAR,PRIMARY KEY(pk_updateDate, pk_idRegione));
-CREATE TABLE IF NOT EXISTS dwh.fac_total(pk_updateDate TIMESTAMP, msr_total INT);
+CREATE TABLE IF NOT EXISTS dwh.dim_province( pk_updateDate TIMESTAMP, pk_idProvincia SMALLINT, nationName VARCHAR(3),idRegione SMALLINT,provinciaShortName VARCHAR, PRIMARY KEY(pk_updateDate, pk_idProvincia));
+CREATE TABLE IF NOT EXISTS dwh.dim_regioni( pk_updateDate TIMESTAMP, pk_idRegione SMALLINT, nationName VARCHAR(3),regioneName VARCHAR, PRIMARY KEY(pk_updateDate, pk_idRegione));
+CREATE TABLE IF NOT EXISTS dwh.fac_totalCasesProvince(pk_updateDate TIMESTAMP , msr_totalCasesProvince INT, idProvincia INT, PRIMARY KEY(pk_updateDate, idProvincia), FOREIGN KEY(pk_updateDate,idProvincia) REFERENCES dwh.dim_province(pk_updateDate,pk_idProvincia));
+CREATE TABLE IF NOT EXISTS dwh.fac_totalCasesRegioni(pk_updateDate TIMESTAMP , msr_totalCasesRegion INT, idRegione INT, PRIMARY KEY (pk_updateDate, idRegione), FOREIGN KEY(pk_updateDate, idRegione) REFERENCES dwh.dim_regioni(pk_updateDate,pk_idRegione));
