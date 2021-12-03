@@ -38,8 +38,6 @@ while time != today:
     time+=timedelta(days=1)
     time = time.strftime('%Y%m%d')
 
-#Populate fact tables
-
 #Build datamarts
 
 #Close connection
