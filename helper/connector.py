@@ -9,6 +9,6 @@ db_port = '5432'
 def connection():
     # Connecto to the database
     db_string = 'postgres://{}:{}@{}:{}/{}'.format(db_user, db_pass, db_host, db_port, db_name)
-    engine = sqlA.create_engine(db_string)
+    engine = sqlA.create_engine(db_string, pool_size=5, max_overflow=0)
     db = engine.connect()
     return db

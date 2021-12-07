@@ -1,6 +1,3 @@
-from helper.sql import lastUpdate
-
-
 def checkTime(conn):
     #check tables existing
     table_list = []

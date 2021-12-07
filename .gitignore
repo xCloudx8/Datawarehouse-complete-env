@@ -1,0 +1,3 @@
+__pycache__/
+helper/logger/logs
+helper/sql/populateDWH/__pycache__

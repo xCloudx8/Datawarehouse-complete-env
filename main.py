@@ -5,6 +5,9 @@ from datetime import datetime, timedelta
 from helper.sql.initDwh import checkTable
 from helper.sql.populateDWH import populate
 from helper.sql.lastUpdate import lastUpdate
+from helper.logger import logger
+
+logger.info("Start")
 
 #Connect to DB
 conn = connector.connection()
@@ -27,6 +30,7 @@ today -= timedelta(days=1)
 today = today.strftime('%Y%m%d')
 
 while time != today:
+    logger.info("Time: "+time+" Today: "+today)
     #GetUpdatedData
     region = getData.getRegioni_dataset(time)
     province = getData.getProvince_dataset(time)
@@ -42,4 +46,4 @@ while time != today:
 
 #Close connection
 conn.close()
-print("End of process")
+logger.info("End of process")
