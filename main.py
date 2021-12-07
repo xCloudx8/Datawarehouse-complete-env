@@ -12,6 +12,7 @@ logger.info("Start")
 #Connect to DB
 conn = connector.connection()
 res = conn.execute("SELECT 'Connected'")
+logger.info("Connected")
 
 #Initialize DWH
 checkTable.initialize(conn)
@@ -28,6 +29,8 @@ time = time.strftime('%Y%m%d')
 today = datetime.strptime(datetime.today().strftime('%Y%m%d'), '%Y%m%d')
 today -= timedelta(days=1)
 today = today.strftime('%Y%m%d')
+
+logger.info("Starting importing")
 
 while time != today:
     logger.info("Time: "+time+" Today: "+today)

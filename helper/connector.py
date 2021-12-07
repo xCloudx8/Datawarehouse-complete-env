@@ -3,7 +3,7 @@ from sqlalchemy import engine as sqlA
 db_name = 'DWH_COVID'
 db_user = 'sa_etl'
 db_pass = 'password'
-db_host = '172.24.0.2'
+db_host = '172.18.0.2'
 db_port = '5432'
 
 def connection():
